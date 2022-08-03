@@ -8,24 +8,7 @@ library(rmarkdown)
 
 ## cloupe df to segex df (k76 - dataset from segex)
 cloupe2segex <- function(input_df, df_76k, not_in_76k) {
-    # reducing name for SEGEX
-    replace_name <- function(name) {
-        name %>% 
-            str_replace(.,"Gt\\(ROSA\\)26Sor","Gt_ROSA_26Sor") %>% 
-            str_replace(.,"^lnc_","nc_") %>%
-            str_replace(.,"^ncRNA_","nc_") %>% 
-            str_replace(.,"intra-as","intra") %>% 
-            str_replace(.,"_chr","_c") %>% 
-            str_replace(., "@", "_") %>% 
-            str_replace(., "\\(\\+\\)", "p") %>% 
-            str_replace(., "\\(-\\)", "m") %>% 
-            str_replace(., "random", "") %>% 
-            str_replace(., "_JH[0-9]+","_JH") %>% 
-            str_replace(.,"LOC100861978_chr4_JH_m", "LOC100861978_chr4m") %>% 
-            str_replace(., "Fam205a2_chr4_GL456350_m", "Fam205a2_chr4_GL_m") %>% 
-            ifelse(str_detect(., "^nc_"), str_to_lower(.), .) 
-    }
-    
+
     ## from 8 cloupe columns to 6 SEGEX columns
     conversion <- function(df){
         df %>% mutate(ratio = 2^(.[[5]]),
@@ -40,14 +23,12 @@ cloupe2segex <- function(input_df, df_76k, not_in_76k) {
     }
     
     segex_df <- input_df %>% 
-        mutate(probe_id = replace_name(FeatureID)) %>% 
-        left_join(df_76k, ., by = "probe_id") %>% 
+        left_join(df_76k, ., by = "FeatureName") %>% 
         conversion(.)
+
     
     segex_df_appendix <- input_df %>% 
-        mutate(probe_id = replace_name(FeatureID)) %>% 
-        left_join(not_in_76k, ., by = "probe_id") %>% 
-        # full_join(., not_in_segex, by = "probe_id") %>% 
+        left_join(not_in_76k, ., by = "FeatureName") %>% 
         conversion(.)
     
     list(tosegex = segex_df, appendix = segex_df_appendix)
@@ -56,7 +37,6 @@ cloupe2segex <- function(input_df, df_76k, not_in_76k) {
 convert_cloupe_to_segex <- function(old, new, order, all_76k, not_in_76k){
     #message <- str_interp("${old} ===> ${new} conversion")
     #print(message)
-  
     input <- read_csv(old, col_names = T, show_col_types = FALSE) 
     
     ## if order = 1 (Cond1/Cond2 situation) - we have to change order of columns in input file, to make it easier to import with segex
@@ -65,7 +45,7 @@ convert_cloupe_to_segex <- function(old, new, order, all_76k, not_in_76k){
     if (order == 1) {
       input <- input %>% 
         ## change order of columns
-        relocate(c(3,4,5),.after = c(6,7,8)) %>% 
+        relocate(c(3,4,5),.after = c(6,7,8))
     }
     
     input <- cloupe2segex(input, all_76k, not_in_76k) 
@@ -197,10 +177,19 @@ server <- function(input, output, session) {
 
         main_dir <- getwd()
         
+        ## read all platforms
+        all_mm9mm10 <- read_csv("./data/mm10_to_segex.csv", col_names = T, show_col_types = FALSE)
+        
         ## read all probe_id which are presented in 76K platform
-        all_76k <- read_tsv("./data/probeid_76k.csv", col_names = T, show_col_types = FALSE)
+        all_76k <- all_mm9mm10 %>% 
+          filter(in_segex == T) %>% 
+          select(probe_id, FeatureName = gene_short_mm10)
+        
         ## read all probe_id which is NOT presented in 76k (excluding ERCC genes)
-        not_in_76k <- read_tsv("./data/not_in_segex.csv", col_names = T, show_col_types = FALSE)
+        not_in_76k <- all_mm9mm10 %>% 
+          filter(in_segex == F & !grepl("ERCC", probe_id)) %>% 
+          select(probe_id, FeatureName = gene_short_mm10) %>% 
+          arrange(probe_id)
         
         ## read leader file
         leader_file <- read_csv(leader_fname, col_names = T) %>% 
