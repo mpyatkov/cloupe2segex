@@ -1,0 +1,26 @@
+#+KEYWORDS:  UCSC browser, pdf, tracks, download
+#+LANGUAGE:  en
+#+OPTIONS:   H:4
+#+OPTIONS:   num:nil
+#+OPTIONS:   toc:2
+#+OPTIONS:   p:t
+#+OPTIONS: author:nil date:nil
+
+* Cloupe to SEGEX converter
+
+
+[[file:screenshot/screenshot.png]]
+
+[[https://mpyatkov.shinyapps.io/tosegex/][Link to Shinyapps]]
+
+** Acknowledgements
+
+*Created by:* Maxim Pyatkov, laboratory of David Waxman, Dept. of Biology, Boston University
+
+*Grant support:* Development of this script was carried out in the laboratory of David J Waxman, Boston University, supported in part by NIH grants R01-DK121998 (Growth Hormone Regulation of Sex Differences in Liver Metabolism) and R01-ES024421 (Epigenetic Actions of Environmental Chemicals) to DJW.
+
+
+* COMMENT Local vars :noexport:
+   ;; Local Variables:
+   ;; eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
+   ;; End:
