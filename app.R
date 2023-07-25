@@ -2,7 +2,14 @@ options(shiny.maxRequestSize = 20*1024^2)
 
 library(shiny)
 library(shinyjs)
-library(tidyverse)
+
+#library(tidyverse)
+library(purrr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(tidyr)
+
 library(markdown)
 library(rmarkdown)
 

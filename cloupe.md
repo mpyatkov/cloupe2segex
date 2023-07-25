@@ -1,2 +1,2 @@
 #### CSV file(s) exported from cloupe browser (8 columns)
-By default, expression data in column 3 is used as the numerator and expression data in column 6 is used as the denominator. If you want to reverse that and use expression data in column 6 as the numerator, and expression data in column 3 as the denominator, set **ReverseColumns** to 1 for a specific Loupe file in the file with description.
+By default, expression data in column 3 is used as the numerator and expression data in column 6 is used as the denominator. If you want to reverse that and use expression data in column 6 as the numerator, and expression data in column 3 as the denominator, set **ReverseColumns** to 1 for the DEG comparison in column 5 of above setup file.
