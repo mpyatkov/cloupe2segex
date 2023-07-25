@@ -1,11 +1,9 @@
-#### CSV file with description (4 columns with header):
+#### SETUP FILE for you to prepare(a CSV file with a Header and5 columns, in the following order).
 
-Contains cloupe csv filenames which should be converted to SEGEX format (tsv)
-
-* Current filename without extension
-* Condition 1 (**text without spaces**)
-* Condition 2 (**text without spaces**)
+* Filename of Loupe browser DEG output file to be converted to SEGEX input format (name without csv extension)
+* Condition2 (**Label for expression data to be used as the Numerator (<span style="color:red">Treatment</span>). Use text without spaces**)
+* Condition1 (**Label for expression data to be used as the Denominator (<span style="color:red">Control</span>). Use text without spaces**)
 * Identifier (**IntronicMonoExonic** or **Genebody**)
-* ReverseColumns (**0** or **1** where 0 - do nothing and 1 - reverse conditions)
+* ReverseColumns (0  or 1   where 0 - do nothing and 1 - reverse conditions; see instructions below)
 
-The DEG data exported from the Loupe browser contains information about both conditions (Control, Treatment) at the same time, and we have to manually specify what is Control and what is Treatment to make it easier to import into SEGEX. This service, like SEGEX, uses the Condition2 (numerator) and Condition1 (denominator) notation by default.
+DEG data exported from the Loupe browser (csv file) contains expression data for both conditions (<span style="color:red">Treatment, Control</span>). We need to manually specify which expression data is Treatment and which data is Control. We use the convention of Condition2 (numerator) to designate Treatment and Condition1 (denominator) to designate the Control.

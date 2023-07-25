@@ -1,2 +1,2 @@
 #### CSV file(s) exported from cloupe browser (8 columns)
-By default, columns 3-5 correspond to Condition2, 6-8 to Condition1. If you want to reverse Condition1 and Condition2, just set **ReverseColumns** to **1** for a specific Loupe file in the file with description.
+By default, expression data in column 3 is used as the numerator and expression data in column 6 is used as the denominator. If you want to reverse that and use expression data in column 6 as the numerator, and expression data in column 3 as the denominator, set **ReverseColumns** to 1 for a specific Loupe file in the file with description.

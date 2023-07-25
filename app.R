@@ -101,15 +101,15 @@ ui <- fluidPage(
     ),
     
     sidebarLayout(
-        sidebarPanel(
+        sidebarPanel(width=6,
             
             includeMarkdown("leader.md"),
             
-            fileInput("leader", label="Description"),
+            fileInput("leader", label="Setup file upload:"),
             
             includeMarkdown("cloupe.md"),
             
-            fileInput("csvs", label="Cloupe file(s)", multiple = TRUE),
+            fileInput("csvs", label="Upload of Cloupe file(s) to be converted:", multiple = TRUE),
             
             actionButton(inputId = "go", label = "Convert"),
             
